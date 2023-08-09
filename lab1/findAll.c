@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 int findSum(int numParams, char * argv[]);
 int findMin(int numParams, char * argv[]);
@@ -25,7 +26,7 @@ int main(int argc, char *argv[])
     }
 
 
-    if(*argv[1] == 'SUM') {
+    if(!strcmp(argv[1], 'SUM')) {
         sum = findSum(numParams, argv);
     } 
     else if(*argv[1] == 'MIN') {
@@ -37,8 +38,6 @@ int main(int argc, char *argv[])
     else if(*argv[1] == 'AVG') {
         sum = findSum(numParams, argv);
     }
-
-    
 
     printf("The sum of numbers given is: %d\n", sum);
 
