@@ -39,20 +39,23 @@ int main(int argc, char *argv[])
 
     char *pOp = argv[1];
 
-    if(!strcmp(pOp, 'SUM')) {
+    if(!strcmp(pOp, "SUM")) {
         sum = findSum(numParams, argv);
-    } 
-    else if(pOp, 'MIN') {
-        sum = findSum(numParams, argv);
-    }
-    else if(pOp, 'MAX') {
-        sum = findSum(numParams, argv);
-    }
-    else if(pOp, 'AVG') {
-        sum = findSum(numParams, argv);
-    }
+        printf("The sum of numbers given is: %d\n", sum);
 
-    printf("The sum of numbers given is: %d\n", sum);
+    } 
+    if(!strcmp(pOp, "MIN")) {
+        min = findMin(numParams, argv);
+        printf("The min of numbers given is: %d\n", min);
+    }
+    if(!strcmp(pOp, "MAX")) {
+        max = findMax(numParams, argv);
+        printf("The max of numbers given is: %d\n", max);
+    }
+    if(!strcmp(pOp, "AVG")) {
+        avg = findAvg(numParams, argv);
+        printf("The average of numbers given is: %f\n", avg);
+    }
 
     return 0;
 }
@@ -66,7 +69,7 @@ int findSum(int numParams, char * argv[]){
     pParam = argv[2];
 
    for(int i = 1; i <= numParams; i++ ){
-        pParam = argv[i];  // Copy the pointer to the first parameter passed
+        pParam = argv[i+1];  // Copy the pointer to the first parameter passed
         num = atoi(pParam);
         sum += num;
         printf("pParam = %s, sum = %d\n", pParam, sum);
@@ -83,7 +86,7 @@ int findMin(int numParams, char * argv[]){
    pParam = argv[2];
 
     for(int i = 1; i <= numParams; i++ ){
-        pParam = argv[i];  // Copy the pointer to the first parameter passed
+        pParam = argv[i+1];  // Copy the pointer to the first parameter passed
         num = atoi(pParam);
         if (i == 1) {
             min = num;
@@ -107,7 +110,7 @@ int findMax(int numParams, char * argv[]){
    pParam = argv[2];
 
     for(int i = 1; i <= numParams; i++ ){
-        pParam = argv[i];  // Copy the pointer to the first parameter passed
+        pParam = argv[i+1];  // Copy the pointer to the first parameter passed
         num = atoi(pParam);
         if (i == 1) {
             max = num;
@@ -132,7 +135,7 @@ float findAvg(int numParams, char * argv[]){
    pParam = argv[2];
 
     for(int i = 1; i <= numParams; i++ ){
-        pParam = argv[i];  // Copy the pointer to the first parameter passed
+        pParam = argv[i+1];  // Copy the pointer to the first parameter passed
         num = atoi(pParam);
         sum += num;
         printf("pParam = %s, sum = %d\n", pParam, sum);
