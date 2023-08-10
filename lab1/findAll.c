@@ -1,41 +1,54 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <limits.h>
+
+typedef enum OP {
+    MIN = 1,
+    MAX,
+    SUM, 
+    AVG
+}enumOp;
+
+enumOp eOp;
+int min = INT_MAX;
+int max = 0;
+int sum = 0;
+float avg = 0.0;
+
 
 int findSum(int numParams, char * argv[]);
 int findMin(int numParams, char * argv[]);
 int findMax(int numParams, char * argv[]);
-int findAvg(int numParams, char * argv[]);
+float findAvg(int numParams, char * argv[]);
 
 int main(int argc, char *argv[])
 {
-    printf("Find the sum of numbers entered by the user!!!\n");
 
     if(argc < 3){
         printf("Error: Insufficient parameters!!!\n");
-        printf("Give at least one or more valid integer numbers as parameters.\n");
+        printf("Give at least two or more valid integer numbers as parameters.\n");
         return -1;
     }
 
     int numParams = argc - 2;
-    int sum = 0;
-
 
     for(int i = 0; i < argc; i++){
         printf(" argv[%d] = %s\n", i, argv[i]);
     }
 
+    char *pOp = argv[1];
 
-    if(!strcmp(argv[1], 'SUM')) {
+    if(!strcmp(pOp, 'SUM')) {
         sum = findSum(numParams, argv);
     } 
-    else if(*argv[1] == 'MIN') {
+    else if(pOp, 'MIN') {
         sum = findSum(numParams, argv);
     }
-    else if(*argv[1] == 'MAX') {
+    else if(pOp, 'MAX') {
         sum = findSum(numParams, argv);
     }
-    else if(*argv[1] == 'AVG') {
+    else if(pOp, 'AVG') {
         sum = findSum(numParams, argv);
     }
 
@@ -67,7 +80,7 @@ int findMin(int numParams, char * argv[]){
    int min = 0;
    int num;
 
-   pParam = argv[1];
+   pParam = argv[2];
 
     for(int i = 1; i <= numParams; i++ ){
         pParam = argv[i];  // Copy the pointer to the first parameter passed
@@ -91,7 +104,7 @@ int findMax(int numParams, char * argv[]){
    int max = 0;
    int num;
 
-   pParam = argv[1];
+   pParam = argv[2];
 
     for(int i = 1; i <= numParams; i++ ){
         pParam = argv[i];  // Copy the pointer to the first parameter passed
@@ -109,14 +122,14 @@ int findMax(int numParams, char * argv[]){
     return max;
 }
 
-int findAvg(int numParams, char * argv[]){
+float findAvg(int numParams, char * argv[]){
 
    char *pParam;
-   int avg = 0;
+   float avg = 0;
    int sum = 0;
    int num;
 
-   pParam = argv[1];
+   pParam = argv[2];
 
     for(int i = 1; i <= numParams; i++ ){
         pParam = argv[i];  // Copy the pointer to the first parameter passed
