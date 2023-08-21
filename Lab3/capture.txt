@@ -1,4 +1,2 @@
-capture.txt
-error.txt
-lab3_std_streams
-lab3_std_streams.c
+About to try to access a file that doesnot
+cat: bad-filename.txt: No such file or directory
