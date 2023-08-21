@@ -1,0 +1,4 @@
+capture.txt
+error.txt
+lab3_std_streams
+lab3_std_streams.c
