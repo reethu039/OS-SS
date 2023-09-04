@@ -10,6 +10,7 @@ echo "Parameter B passed is $numB"
 if [ $numA -eq $numB ]
 then
   echo "Parameter A is equal to B"
+  echo "Another line within if then"
 elif [ $numA -gt $numB ]
 then
   echo "Parameter A is greater than Parameter B"
