@@ -18,7 +18,8 @@ char message2[] = "2. Introduction to threads !!!";
 
 static int procData = 100;
 
-int main(){
+int main()
+{
 
 	int stat;
 	pthread_t thread_id1;
@@ -31,51 +32,53 @@ int main(){
 
 	stat = pthread_create(&thread_id1, NULL, thread_function, (void *)message1);
 
-	if(stat != 0){ //thread creation failure
-	 perror("Error: Thread 1 creation failed\n");
-	 exit(EXIT_FAILURE);
+	if (stat != 0)
+	{ // thread creation failure
+		perror("Error: Thread 1 creation failed\n");
+		exit(EXIT_FAILURE);
 	}
 
 	printf("Main: Thread 1 created successfully\n");
 
 	stat = pthread_create(&thread_id2, NULL, thread_function, (void *)message2);
 
-	if(stat != 0){ //thread creation failure
-	 perror("Error: Thread 2 creation failed\n");
-	 exit(EXIT_FAILURE);
+	if (stat != 0)
+	{ // thread creation failure
+		perror("Error: Thread 2 creation failed\n");
+		exit(EXIT_FAILURE);
 	}
 
 	printf("Main: Thread 2 created successfully\n");
 
-
-	while(1){
-	 sleep(1);
-    	 printf("Main: My PID %d\n", (int) getpid());
-    	 printf("Main: My procData = %d and localData = %d\n",  procData, localData);
-	 procData++;
-	 localData++;
+	while (1)
+	{
+		sleep(1);
+		printf("Main: My PID %d\n", (int)getpid());
+		printf("Main: My procData = %d and localData = %d\n", procData, localData);
+		procData++;
+		localData++;
 	}
-
 
 	exit(EXIT_SUCCESS);
 
 } // end of main()
 
-
-void * thread_function(void *arg){
+void *thread_function(void *arg)
+{
 
 	int localData = 1000;
 
 	printf("Inside thread: Argument passed to it was %s\n", (char *)arg);
 	printf("PID of the thread is %d\n", getpid());
 
-    sleep(1);
-    while(1){
-    	sleep(1);
-    	printf("Thread: My PID %d\n", (int) getpid());
-    	printf("Thread: My procData = %d and localData = %d\n",  procData, localData);
-    	procData++;
+	sleep(1);
+	while (1)
+	{
+		sleep(1);
+		printf("Thread: My PID %d\n", (int)getpid());
+		printf("Thread: My procData = %d and localData = %d\n", procData, localData);
+		procData++;
 		localData++;
-    }
+	}
 
 } // end of thread_function()
