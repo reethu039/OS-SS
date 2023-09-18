@@ -11,14 +11,16 @@
 // Use ps -T -p PID to view thread id: here PID is of parent who created the thread
 // SPID alias lwp (light weight process) alias tid (thread id) gives the unique ID of the thread
 
-struct ThreadArgs
+typedef struct ThreadArgs
 {
     int intValue;
     float floatValue;
     char message[50];
-};
+} ThreadArgs;
 
-void *thread_function(void *arg);
+void *thread_function1(void *arg);
+void *thread_function2(void *arg);
+void *thread_function3(void *arg);
 
 static int procData = 100;
 
@@ -35,8 +37,8 @@ int main()
     printf("PID of the main process is %d\n", getpid());
     printf("Going to use pthread_create() POSIX call.\n");
 
-    struct ThreadArgs args1 = {42, 3.14, "1. Introduction to threads !!!"};
-    stat = pthread_create(&thread_id1, NULL, thread_function, &args1);
+    ThreadArgs args1 = {42, 3.14, "1. Introduction to threads !!!"};
+    stat = pthread_create(&thread_id1, NULL, thread_function1, (void*)&args1);
 
     if (stat != 0)
     { // Thread creation failure
@@ -46,8 +48,8 @@ int main()
 
     printf("Main: Thread 1 created successfully\n");
 
-    struct ThreadArgs args2 = {39, 3.75, "2. Introduction to threads !!!"};
-    stat = pthread_create(&thread_id2, NULL, thread_function, &args2);
+    ThreadArgs args2 = {39, 3.75, "2. Introduction to threads !!!"};
+    stat = pthread_create(&thread_id2, NULL, thread_function2, (void*)&args2);
 
     if (stat != 0)
     { // Thread creation failure
@@ -57,8 +59,8 @@ int main()
 
     printf("Main: Thread 2 created successfully\n");
 
-    struct ThreadArgs args3 = {40, 3.39, "3. Introduction to threads !!!"};
-    stat = pthread_create(&thread_id3, NULL, thread_function, &args3);
+    ThreadArgs args3 = {40, 3.39, "3. Introduction to threads !!!"};
+    stat = pthread_create(&thread_id3, NULL, thread_function3, (void*)&args3);
 
     if (stat != 0)
     { // Thread creation failure
@@ -80,10 +82,52 @@ int main()
     exit(EXIT_SUCCESS);
 }
 
-void *thread_function(void *arg)
+void *thread_function1(void *arg)
 {
-    struct ThreadArgs *threadArgs = (struct ThreadArgs *)arg;
+    ThreadArgs *threadArgs = (ThreadArgs *)arg;
     int localData = 1000;
+
+    printf("Inside thread: Argument passed to it was %s\n", threadArgs->message);
+    printf("Received int value: %d\n", threadArgs->intValue);
+    printf("Received float value: %f\n", threadArgs->floatValue);
+    printf("PID of the thread is %d\n", getpid());
+
+    sleep(1);
+    while (1)
+    {
+        sleep(1);
+        printf("Thread: My PID %d\n", (int)getpid());
+        printf("Thread: My procData = %d and localData = %d\n", procData, localData);
+        procData++;
+        localData++;
+    }
+}
+
+void *thread_function2(void *arg)
+{
+    ThreadArgs *threadArgs = (ThreadArgs *)arg;
+    int localData = 2000;
+
+    printf("Inside thread: Argument passed to it was %s\n", threadArgs->message);
+    printf("Received int value: %d\n", threadArgs->intValue);
+    printf("Received float value: %f\n", threadArgs->floatValue);
+    printf("PID of the thread is %d\n", getpid());
+
+    sleep(1);
+    while (1)
+    {
+        sleep(1);
+        printf("Thread: My PID %d\n", (int)getpid());
+        printf("Thread: My procData = %d and localData = %d\n", procData, localData);
+        procData++;
+        localData++;
+    }
+}
+
+void *thread_function3(void *arg)
+{
+    ThreadArgs *threadArgs = (ThreadArgs *)arg;
+    int localData = 3000;
 
     printf("Inside thread: Argument passed to it was %s\n", threadArgs->message);
     printf("Received int value: %d\n", threadArgs->intValue);
