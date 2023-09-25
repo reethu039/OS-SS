@@ -100,6 +100,3 @@ void * thread1_fn(void *arg){
   }
   
 } // end of thread1_function()
-
-
-
