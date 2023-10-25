@@ -3,65 +3,65 @@
 #include <stdlib.h>
 #include <string.h>
 #include <pthread.h>
+#define num 5 
 
-// Building the executable with the command: gcc -o threadEx4 -D_REENTRANT lab8_assign7_prob1.c -lpthread
+void * thread_fn(void *arg);
 
-void *thread_function(void *arg);
+typedef struct {
+    int* arr;
+    int num_elements;
+} ThreadArgs;
 
-char message1[] = "1. Introduction to threads !!!";
 
-static int procData = 100;
+int main(){
 
-int main()
-{
-
-	int stat;
-	pthread_t thread_id1;
-
-	int localData = 0;
-
-	printf("PID of the main process is %d\n", getpid());
-	printf("Going to use pthread_create() POSIX call.\n");
-
-    int arr[3] = {10,20,30};
-	stat = pthread_create(&thread_id1, NULL, thread_function, (void *)&arr);
-
-	if (stat != 0)
-	{ // thread creation failure
-		perror("Error: Thread 1 creation failed\n");
-		exit(EXIT_FAILURE);
-	}
-
-	printf("Main: Thread 1 created successfully\n");
+  int stat;
+  int arr[num] = {10,3,7,21,15};
+  ThreadArgs thread_args;
+  thread_args.arr = arr;
+  thread_args.num_elements = num;
+  pthread_t thread_id;
+  void *thread_result;
+    
+  printf("Main: PID of the main process is %d\n", getpid());
+  
+  stat = pthread_create(&thread_id, NULL, thread_fn, &thread_args);
+  
+  if(stat != 0){ 
+    perror("Main: Error: Thread creation failed\n");
+    exit(EXIT_FAILURE);
+  }
+  
+  printf("Main: Thread created successfully\n");
+  printf("Main: I'm sleeping for 10 seconds\n");
+  sleep(10);
+  printf("Main: I woke up after 10 seconds\n");
+  printf("Main: I'm going to run forever\n");
+  int count = 1;
+  while(1)
+  {
+    printf("Main: %d. Message from Main\n",count);
+    count++;
     sleep(10);
-	while (1)
-	{
-		sleep(10);
-		printf("Main: My PID %d\n", (int)getpid());
-		printf("Main: My procData = %d and localData = %d\n", procData, localData);
-		procData++;
-		localData++;
-	}
-	exit(EXIT_SUCCESS);
+  }
+} 
+void * thread_fn(void *arg){
+  ThreadArgs* thread_args = (ThreadArgs*)arg;
+	
+  printf("Thread: I'm created.\n");
+  for (int i = 0; i < thread_args->num_elements; i++){
+    printf("%d ",thread_args->arr[i]);
+  }
+  printf("\n");
+  while(1)
+  {
+  int sum = 0;
+        for (int i = 0; i < thread_args->num_elements; i++) {
+            sum += thread_args->arr[i];
+        }
 
-} // end of main()
-
-void *thread_function(void *arr)
-{
-    int localData = 1000;
-    int avg, sum;
-    for(int i=0; i<3; i++){
-        sum = sum + arr[i];
-    }
-    avg = sum/3;
-    printf("%d\n",sum);
-    sleep(2);
-    while (1)
-    {
+        double average = (double)sum / thread_args->num_elements;
+        printf("Average: %.2lf\n", average);
         sleep(5);
-        printf("Thread: Average of array = %d\n", avg);
-        printf("Thread: My procData = %d and localData = %d\n", procData, localData);
-        procData++;
-        localData++;
-    }
+  }
 }
